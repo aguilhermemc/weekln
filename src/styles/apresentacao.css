@@ -1,0 +1,246 @@
+.apresentacao {
+  flex: 1;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: clamp(1rem, 2.5vw, 2rem);
+}
+.apresentacao-topo {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.apresentacao-topo h1 {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+}
+.apresentacao-controles {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.apresentacao-controles .botao-sec {
+  padding: 0.65rem 1.2rem;
+}
+.palco {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  gap: 1rem;
+}
+.seta {
+  flex: none;
+  align-self: center;
+  width: 56px;
+  height: 56px;
+  border: 1.5px solid var(--linha);
+  border-radius: 50%;
+  background: var(--superficie);
+  color: var(--tinta);
+  font-size: 1.9rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.2s var(--curva);
+}
+.seta:hover {
+  border-color: var(--linha-forte);
+  transform: scale(1.08);
+}
+.seta:active {
+  transform: scale(0.95);
+}
+
+/* em tela cheia, só o palco */
+html:fullscreen .nav {
+  display: none;
+}
+html:fullscreen .apresentacao {
+  max-width: none;
+}
+
+/* slide: a cor da pessoa é o destaque da tela */
+.slide {
+  flex: 1;
+  min-width: 0;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  padding: clamp(1.25rem, 3vw, 3rem);
+  border-radius: 36px;
+  background: var(--tom);
+  color: var(--tinta-slide);
+  animation: entrar 0.5s var(--curva);
+}
+.slide-esqueleto {
+  background: var(--superficie-2);
+  animation: pulsar 1.4s ease-in-out infinite;
+}
+.slide-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.slide-topo h2 {
+  font-size: clamp(2.2rem, 6vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+.contador {
+  flex: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: rgb(21 26 51 / 0.12);
+  font-weight: 700;
+}
+.blocos {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 2rem);
+}
+.bloco {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  min-width: 0;
+  animation: subir 0.6s var(--curva) backwards;
+}
+.bloco:nth-child(2) {
+  animation-delay: 0.12s;
+}
+.bloco-titulo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.bloco-titulo h3 {
+  font-size: 1.5rem;
+}
+.bloco-titulo span {
+  opacity: 0.7;
+  font-weight: 500;
+}
+.bloco img,
+.sem-foto {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 24px;
+  background: rgb(255 255 255 / 0.45);
+}
+.sem-foto {
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 3vw, 2rem);
+  overflow: hidden;
+  text-align: center;
+}
+.palavras-reserva {
+  visibility: hidden;
+}
+.palavras {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  font-size: clamp(1.8rem, 4.2vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+
+/* indicador: uma bolinha por pessoa, na cor dela */
+.indicador {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+.indicador-pontos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.ponto {
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--tom);
+  opacity: 0.4;
+  cursor: pointer;
+  transition: width 0.35s var(--curva), opacity 0.2s, transform 0.2s;
+}
+.ponto:hover {
+  opacity: 0.8;
+  transform: scale(1.2);
+}
+.ponto.ativo {
+  width: 40px;
+  opacity: 1;
+  transform: none;
+}
+
+.vazio {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  color: var(--tinta-2);
+  font-size: 1.2rem;
+}
+.vazio p {
+  margin: 0;
+}
+
+@keyframes entrar {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pulsar {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 760px) {
+  .blocos {
+    grid-template-columns: 1fr;
+  }
+  .seta {
+    width: 40px;
+    height: 40px;
+    font-size: 1.4rem;
+  }
+  .slide {
+    border-radius: 28px;
+  }
+}
