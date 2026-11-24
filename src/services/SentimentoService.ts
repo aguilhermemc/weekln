@@ -1,8 +1,9 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { DadosEnvio, Envio } from '@/types/sentimento';
+import { getSessionId } from '@/utils/sessao';
 import type { ISentimentoService } from './interfaces/ISentimentoService';
 
-// O dono do envio é o usuário logado (auth.uid() nas funções do banco)
+// O dono do envio é identificado por um session_id salvo no navegador (localStorage)
 export class SentimentoService implements ISentimentoService {
   constructor(private readonly client: SupabaseClient) {}
 
@@ -24,13 +25,17 @@ export class SentimentoService implements ISentimentoService {
   }
 
   async buscarMeu(semana: string): Promise<Envio | null> {
-    const { data, error } = await this.client.rpc('meu_envio', { p_semana: semana });
+    const { data, error } = await this.client.rpc('meu_envio', {
+      p_session_id: getSessionId(),
+      p_semana: semana,
+    });
     if (error) throw error;
     return ((data as Envio[] | null) ?? [])[0] ?? null;
   }
 
   async enviar(semana: string, d: DadosEnvio): Promise<void> {
     const { error } = await this.client.rpc('enviar_sentimento', {
+      p_session_id: getSessionId(),
       p_nome: d.nome,
       p_semana: semana,
       p_pal_seg: d.palavrasSegunda,
@@ -43,6 +48,7 @@ export class SentimentoService implements ISentimentoService {
 
   async editar(id: string, d: DadosEnvio): Promise<void> {
     const { error } = await this.client.rpc('editar_sentimento', {
+      p_session_id: getSessionId(),
       p_id: id,
       p_nome: d.nome,
       p_pal_seg: d.palavrasSegunda,
